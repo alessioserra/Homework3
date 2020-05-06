@@ -41,6 +41,7 @@ class alexnetDANN(nn.Module):
             nn.ReLU(inplace=True),
             nn.Linear(4096, num_classes),
         )
+        self.discriminator = nn.Sequential()
 
     def forward(self, x, alpha=None):
         
@@ -61,4 +62,5 @@ def alexnetDANN(pretrained=True, progress=False, **kwargs):
         state_dict = load_state_dict_from_url(model_urls['alexnet'],
                                               progress=progress)
         model.load_state_dict(state_dict)
+    self.discriminator = deepcopy(self.classifier)
     return model
