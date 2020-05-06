@@ -1,7 +1,13 @@
 import torch
 import torch.nn as nn
+import copy
 from .gradient_reversal_example import ReverseLayerF
-from .utils import load_state_dict_from_url
+from torchvision.models import alexnet
+
+try:
+    from torch.hub import load_state_dict_from_url
+except ImportError:
+    from torch.utils.model_zoo import load_url as load_state_dict_from_url
 
 
 __all__ = ['AlexNet', 'alexnet']
@@ -57,10 +63,11 @@ class alexnetDANN(nn.Module):
 
 
 def alexnetDANN(pretrained=True, progress=False, **kwargs):
-    model = AlexNet(**kwargs)
+    model = alexnet(**kwargs)
     if pretrained:
         state_dict = load_state_dict_from_url(model_urls['alexnet'],
-                                              progress=progress)
+                                              progress=progress
+                                              )
         model.load_state_dict(state_dict)
-    self.discriminator = deepcopy(self.classifier)
+        self.discriminator = copy.deepcopy(self.classifier)
     return model
