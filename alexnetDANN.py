@@ -42,7 +42,7 @@ class alexnetDANN(nn.Module):
             nn.Linear(4096, num_classes),
         )
 
-    def forward(self, x, alpha):
+    def forward(self, x, alpha=None):
         
         if alpha is not None:
            reversed_input = ReverseLayerF.apply(x, alpha)
