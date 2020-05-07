@@ -69,5 +69,5 @@ def alexnetDANN(pretrained=True, progress=False, **kwargs):
                                               progress=progress
                                               )
         model.load_state_dict(state_dict)
-        self.discriminator = copy.deepcopy(self.classifier)
+        model.discriminator = copy.deepcopy(model.classifier)
     return model
