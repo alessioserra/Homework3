@@ -62,12 +62,18 @@ class alexnetDANN(nn.Module):
         return x
 
 
-def alexnetDANN(pretrained=True, progress=False, **kwargs):
+def alexnetDANN(pretrained=True, progress=False, num_classes=7, **kwargs):
     model = alexnet(**kwargs)
     if pretrained:
         state_dict = load_state_dict_from_url(model_urls['alexnet'],
                                               progress=progress
                                               )
         model.load_state_dict(state_dict)
+        
+        # Load weights for discriminator
         model.discriminator = copy.deepcopy(model.classifier)
+
+        # Adjust for task
+        model.classifier[6] = nn.Linear(4096, num_classes)
+        model.discriminator[6] = nn.Linear(4096, 2)
     return model
