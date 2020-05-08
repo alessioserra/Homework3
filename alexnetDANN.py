@@ -50,14 +50,14 @@ class AlexNetD(nn.Module):
         self.discriminator = nn.Sequential()
 
     def forward(self, x, alpha=None):
+        x = self.features(x)
+        x = self.avgpool(x)
+        x = torch.flatten(x, 1)
         
         if alpha is not None:
            reversed_input = ReverseLayerF.apply(x, alpha)
            x = self.discriminator(reversed_input)              
         else:
-            x = self.features(x)
-            x = self.avgpool(x)
-            x = torch.flatten(x, 1)
             x = self.classifier(x)
         return x
 
