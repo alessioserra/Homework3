@@ -18,10 +18,10 @@ model_urls = {
 }
 
 
-class alexnetDANN(nn.Module):
+class AlexNetD(nn.Module):
 
     def __init__(self, num_classes=1000):
-        super(AlexNet, self).__init__()
+        super(AlexNetD, self).__init__()
         self.features = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),
             nn.ReLU(inplace=True),
@@ -63,7 +63,7 @@ class alexnetDANN(nn.Module):
 
 
 def alexnetDANN(pretrained=True, progress=False, num_classes=7, **kwargs):
-    model = alexnet(**kwargs)
+    model = AlexNetD(**kwargs)
     if pretrained:
         state_dict = load_state_dict_from_url(model_urls['alexnet'],
                                               progress=progress
